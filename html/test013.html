@@ -13,7 +13,7 @@
 		
 <script type="text/javascript">
 $(function(){
-	var the_value={name:11,age:22}
+	var the_value={name:"你过来啊",age:22}
 	$.cookie('the_cookie', JSON.stringify(the_value), { expires: 7, path: '/' });
 	console.log(JSON.parse($.cookie('the_cookie')).name);
 	alert(JSON.parse($.cookie('the_cookie')).name);
