@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>test004-设置点的新图标、弹跳动画</title>
+		<link rel="stylesheet" type="text/css" href="css/test.css"/>
+		<script src="../js/js.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<header class="btn0">设置点的新图标、弹跳动画</header>
+		<section class="sec">
+			<div id="container"></div>
+		</section>
+		
+<script type="text/javascript">
+	// 百度地图API功能
+	var map = new BMap.Map("container");
+	var point = new BMap.Point(113.64964385,34.75661006);
+	map.centerAndZoom(point, 15);
+	
+	//创建小狐狸
+	var myIcon = new BMap.Icon(
+		"http://lbsyun.baidu.com/jsdemo/img/fox.gif",
+		new BMap.Size(150,78.5),
+		{
+			imageSize: new BMap.Size(150,78.5), // 引用图片实际大小
+			imageOffset:new BMap.Size(0,0)  // 图片相对视窗的偏移
+		}
+	);
+	var marker= new BMap.Marker(point,{icon:myIcon});  // 创建标注
+	map.addOverlay(marker);              // 将标注添加到地图中
+	marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+	
+	var label = new BMap.Label("我是文字标注哦",{offset:new BMap.Size(100,-10)});
+	marker.setLabel(label);
+</script>
+	</body>
+</html>

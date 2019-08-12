@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>test006-点聚合</title>
+		<link rel="stylesheet" type="text/css" href="css/test.css"/>
+		<script src="../js/js.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+	</head>
+	<body>
+		<header class="btn0">百度地图(点聚合)</header>
+		<section class="sec">
+			<div id="container"></div>
+		</section>
+		
+		
+<script type="text/javascript">
+	/*
+	// 百度地图API功能
+	var map = new BMap.Map("container");
+	map.centerAndZoom(new BMap.Point(116.404, 39.915), 5);
+	map.enableScrollWheelZoom();
+
+
+	var MAX = 10;
+	var markers = [];
+	var pt = null;
+	var i = 0;
+	for (; i < MAX; i++) {
+	   pt = new BMap.Point(Math.random() * 40 + 85, Math.random() * 30 + 21);
+	   markers.push(new BMap.Marker(pt));
+	}
+	//最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
+	var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
+	*/
+	
+	
+	// 百度地图API功能
+	var map = new BMap.Map("container");
+	map.centerAndZoom(new BMap.Point(116.404, 39.915), 14);
+	map.enableScrollWheelZoom();
+
+	var arr = [[116.417854,39.921988,"地址：北京市东城区王府井大街88号乐天银泰百货八层"],
+					 [116.406605,39.921585,"地址：北京市东城区东华门大街"],
+					 [116.412222,39.912345,"地址：北京市东城区正义路甲5号"]
+					];
+	var markers = [];
+	var pt = null;
+	var i = 0;
+	for (var i = 0; i <arr.length; i ++) {
+		
+		var marker = new BMap.Marker(new BMap.Point(arr[i][0],arr[i][1]));  // 创建标注
+		markers.push(marker);
+	}
+	//最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
+	var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
+	
+	
+	
+</script>
+	</body>
+</html>

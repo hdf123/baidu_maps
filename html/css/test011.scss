@@ -1,0 +1,13 @@
+@charset "UTF-8";
+.sec{
+    >div:nth-child(1){
+        display: flex;
+        label{
+            width:100%;
+            height:1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

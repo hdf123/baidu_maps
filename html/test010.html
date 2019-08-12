@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>test010-搜索附近目标</title>
+		<link rel="stylesheet" type="text/css" href="css/test.css"/>
+		<link rel="stylesheet" type="text/css" href="css/test011.css"/>
+		<script src="../js/js.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<header class="btn0">10百度地图(附近兴趣点)</header>
+		<section class="sec">
+	        <div>
+		        <label>
+		            <input type="radio" id="one" name="options" value="学校" />学校
+		        </label>
+		        <label>
+		            <input type="radio" id="two" name="options" value="餐饮" />餐饮
+		        </label>
+		        <label>
+		            <input type="radio" id="three" name="options" value="商场" />商场
+		        </label>
+		        <label>
+		            <input type="radio" id="four" name="options" value="医院" />医院
+		        </label>
+		        <label>
+		            <input type="radio" id="five" name="options" value="公交站" />车站
+		        </label>
+	        </div>
+			<div id="container"></div>
+		</section>
+<script type="text/javascript">
+	// 百度地图API功能
+	var map = new BMap.Map("container");    // 创建Map实例
+	var point = new BMap.Point(113.775747,34.767684);
+	map.centerAndZoom(point, 15);  // 初始化地图,设置中心点坐标和地图级别
+	var marker = new BMap.Marker(point);  // 创建标注
+	map.addOverlay(marker);               // 将标注添加到地图中
+	map.enableScrollWheelZoom();//鼠标滑轮放大缩小控件
+	var circle = new BMap.Circle(point,1000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.3, strokeOpacity: 0.3});
+	$(function(){
+		var aks="学校";
+        $('input:radio[name="options"]').change(function(){
+            map.clearOverlays();//清除地图覆盖物
+            map.addOverlay(marker);// 将标注添加到地图中
+            map.addOverlay(circle);
+            aks=$(this).val();
+			var options = {//获取检索到的返回结果
+				onSearchComplete: function(results){
+					console.log(results.getCurrentNumPois());
+					// 判断状态是否正确
+					if (local.getStatus() == BMAP_STATUS_SUCCESS){
+						var s = [];
+						for (var i = 0; i < results.getCurrentNumPois(); i ++){
+							console.log(results.getPoi(i));
+							s.push(results.getPoi(i).title + ", " + results.getPoi(i).address);
+						}
+					}
+				}
+			};
+            var local = new BMap.LocalSearch(map, {renderOptions: {map: map, autoViewport: false}});
+            var locals = new BMap.LocalSearch(map, options );
+            local.searchNearby(aks, point,1000);
+            locals.searchNearby(aks, point,1000);
+        });
+        
+   });
+</script>
+	</body>
+</html>

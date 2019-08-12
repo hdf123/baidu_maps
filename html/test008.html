@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>test008-定位、点击清除标记</title>
+		<link rel="stylesheet" type="text/css" href="css/test.css"/>
+		<script src="../js/js.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<header class="btn0">百度地图(定位、定位详情)</header>
+		<section class="sec">
+			<div id="container"></div>
+		</section>
+		
+
+<script type="text/javascript">
+	var map = new BMap.Map("container");
+	var point = new BMap.Point(113.775747,34.767684);
+	map.centerAndZoom(point,12);
+//	map.enableScrollWheelZoom(true);
+	//第一
+	var geolocation = new BMap.Geolocation();
+	geolocation.getCurrentPosition(function(r) {
+		if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+			var myGeo = new BMap.Geocoder();//解读详细地址信息
+			myGeo.getLocation(new BMap.Point(r.point.lng, r.point.lat), function(rs) {
+				var lbs_point = '';
+				var address = '';
+				if (rs.surroundingPois.length > 0) {
+					
+					var mk = new BMap.Marker(rs.point);
+					map.addOverlay(mk);
+					map.panTo(rs.point);
+					
+					lbs_point = rs.surroundingPois[0].point.lng+","+rs.surroundingPois[0].point.lat;
+					address =  rs.surroundingPois[0].title;
+				} else {
+					lbs_point = rs.point.lng+","+rs.point.lat;
+					address = rs.address;
+				}
+				console.log(JSON.stringify(rs, null, 4));
+			})
+		}
+	}, {
+		enableHighAccuracy : true
+	});
+
+	//第二
+//	var geolocation = new BMap.Geolocation();
+//	geolocation.getCurrentPosition(function(r){
+//		
+//		if(this.getStatus() == BMAP_STATUS_SUCCESS){
+//			var mk = new BMap.Marker(r.point);
+//			map.addOverlay(mk);
+//			map.panTo(r.point);
+//			console.log('您的位置：'+r.point.lng+','+r.point.lat);
+//		}else {
+//			alert('failed'+this.getStatus());
+//		}       
+//	},{enableHighAccuracy: true})
+	//关于状态码
+	//BMAP_STATUS_SUCCESS	检索成功。对应数值“0”。
+	//BMAP_STATUS_CITY_LIST	城市列表。对应数值“1”。
+	//BMAP_STATUS_UNKNOWN_LOCATION	位置结果未知。对应数值“2”。
+	//BMAP_STATUS_UNKNOWN_ROUTE	导航结果未知。对应数值“3”。
+	//BMAP_STATUS_INVALID_KEY	非法密钥。对应数值“4”。
+	//BMAP_STATUS_INVALID_REQUEST	非法请求。对应数值“5”。
+	//BMAP_STATUS_PERMISSION_DENIED	没有权限。对应数值“6”。(自 1.1 新增)
+	//BMAP_STATUS_SERVICE_UNAVAILABLE	服务不可用。对应数值“7”。(自 1.1 新增)
+	//BMAP_STATUS_TIMEOUT	超时。对应数值“8”。(自 1.1 新增)
+</script>
+
+</script>
+	</body>
+</html>

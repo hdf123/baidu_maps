@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="../js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="a1"></div>
+		<div class="a2"></div>
+		
+<script type="text/javascript">
+$(function(){
+	var the_value={name:11,age:22}
+	$.cookie('the_cookie', JSON.stringify(the_value), { expires: 7, path: '/' });
+	console.log(JSON.parse($.cookie('the_cookie')).name);
+	alert(JSON.parse($.cookie('the_cookie')).name);
+})
+
+
+//	document.cookie="mobile=cmobile"; 
+//	document.cookie="token=ctoken"; 
+//	var strCookie=document.cookie; 
+//	console.log(strCookie)
+//	//mobile=cmobile; token=ctoken
+//
+//var strCookie=document.cookie.replace(/\s*/g,"");
+// //取到cooike所有的字符串并去掉空格，就是少了去空格这步
+//function getdescookie(strcookie,matchcookie){//解析cookie字符串
+// 	var getMatchCookie;
+// 	var arrCookie=strcookie.split(";");
+// 	for(var i=0;i<arrCookie.length;i++){
+// 		var arr=arrCookie[i].split("=");
+//   	if(matchcookie == arr[0]){
+//     		getMatchCookie = arr[1];
+//     		break;
+//   	}
+// 	}
+// return getMatchCookie;
+// }
+// var token = getdescookie(strCookie,'token');//用key值快速的取
+// var mobile = getdescookie(strCookie,'mobile');
+//
+//console.log(token);
+//console.log(mobile);
+</script>		
+	</body>
+</html>

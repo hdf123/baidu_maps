@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>test百度地图</title>
+		<link rel="stylesheet" type="text/css" href="css/test.css"/>
+		<!--113.775747,34.767684-->
+		<!--zD8XjNeqt1V0aIRGtGbYFExx6MpC1Yif-->
+		<script src="../js/js.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<header>百度地图</header>
+		<section class="sec">
+			<div id="container"></div>
+		</section>
+		<input type="button" class="btn0" value="清除标记"/>
+
+<script type="text/javascript">
+	// 创建地图实例
+	var map = new BMap.Map("container"); 
+	// 创建点坐标  
+	var point = new BMap.Point(116.404, 39.915); 
+	// 初始化地图，设置中心点坐标和地图级别 
+	map.centerAndZoom(point, 15);  
+	//开启鼠标滚轮缩放
+	map.enableScrollWheelZoom(true);
+	//平移缩放控件(PC端默认位于地图左上方，它包含控制地图的平移和缩放的功能。移动端提供缩放控件，默认位于地图右下方)
+	map.addControl(new BMap.NavigationControl());
+	//比例尺(默认位于地图左下方，显示地图的比例关系)
+	map.addControl(new BMap.ScaleControl());  
+	//缩略地图(默认位于地图右下方，是一个可折叠的缩略地图)
+	map.addControl(new BMap.OverviewMapControl());   
+	//地图类型(	默认位于地图右上方)
+	map.addControl(new BMap.MapTypeControl()); 
+	//获取缩放级别
+	map.addEventListener("zoomend", function(e){
+	  var ZoomNum = map.getZoom();
+	  console.log(ZoomNum);
+	});
+	/**
+	 * 设置地图样式
+	 */
+//	var mapStyle={  style : "midnight" }  
+//	map.setMapStyle(mapStyle);	
+	/**
+	 * 修改中心点
+	 */
+//	window.setTimeout(function(){ 
+//	    map.panTo(new BMap.Point(116.409, 39.918));    
+//	}, 2000);
+	/**
+	 * 添加标注
+	 */
+	var marker = new BMap.Marker(point); //创建标注 
+	map.addOverlay(marker); //将标注添加到地图中      
+	marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+	//监听标注事件
+	marker.addEventListener("click", function(){    
+	    alert("您点击了标注"); 
+	    
+	}); 
+	/**
+	 * 随机向地图添加标注
+	 */
+	
+	var arr = [[116.417854,39.921988,"地址：北京市东城区王府井大街88号乐天银泰百货八层"],
+					 [116.406605,39.921585,"地址：北京市东城区东华门大街"],
+					 [116.412222,39.912345,"地址：北京市东城区正义路甲5号"]
+					];
+	var opt = {
+				width : 250,     // 信息窗口宽度
+				height: 80,     // 信息窗口高度
+				title : "信息窗口" , // 信息窗口标题
+				enableMessage:true//设置允许信息窗发送短息
+			   };
+	var bounds = map.getBounds();
+	for (var i = 0; i <arr.length; i ++) {
+		var marker = new BMap.Marker(new BMap.Point(arr[i][0],arr[i][1]));  // 创建标注
+		var content = arr[i][2];
+		map.addOverlay(marker);
+		addClickHandler(content,marker);
+	}
+	function addClickHandler(content,marker){
+		marker.addEventListener("click",function(e){
+			openInfo(content,e)}
+		);
+	}
+	function openInfo(content,e){
+		var p = e.target;
+		var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+		var infoWindow = new BMap.InfoWindow(content,opt);  // 创建信息窗口对象 
+		map.openInfoWindow(infoWindow,point); //开启信息窗口
+	}
+	/**
+	 * 可拖拽的标注
+	 */
+	marker.enableDragging();    
+	marker.addEventListener("dragend", function(e){    
+	    alert("当前位置：" + e.point.lng + ", " + e.point.lat);    
+	}) 
+	/**
+	 * 添加折线---strokeWeight:线粗细；strokeOpacity：透明度
+	 */
+	var polyline = new BMap.Polyline([
+	    new BMap.Point(116.399, 39.910),
+	    new BMap.Point(116.405, 39.920)
+	    ],
+	    {strokeColor:"blue", strokeWeight:6, strokeOpacity:0.5}
+	    );
+	map.addOverlay(polyline);
+	/**
+	 * 自定义标注
+	 */
+	// 定义自定义覆盖物的构造函数  
+	function SquareOverlay(center, length, color){
+	    this._center = center;
+	    this._length = length;
+	    this._color = color;
+	}
+	// 继承API的BMap.Overlay
+	SquareOverlay.prototype = new BMap.Overlay();
+	// 实现初始化方法  
+	SquareOverlay.prototype.initialize = function(map){
+	    // 保存map对象实例
+	    this._map = map;
+	    // 创建div元素，作为自定义覆盖物的容器
+	    var div = document.createElement("div");
+	    div.style.position = "absolute";
+	    // 可以根据参数设置元素外观
+	    div.style.width =this._length + "px";
+	    div.style.height =this._length + "px";
+	    div.style.background =this._color;
+	    // 将div添加到覆盖物容器中
+	    map.getPanes().markerPane.appendChild(div);
+	    // 保存div实例
+	    this._div = div;
+	    // 需要将div元素作为方法的返回值，当调用该覆盖物的show、
+	    // hide方法，或者对覆盖物进行移除时，API都将操作此元素。
+	    return div;
+	}
+	// 实现绘制方法   
+	SquareOverlay.prototype.draw = function(){  
+		var map = this._map;
+	// 根据地理坐标转换为像素坐标，并设置给容器    
+	    var position = this._map.pointToOverlayPixel(this._center);    
+	    this._div.style.left = position.x - this._length / 2 + "px";    
+	    this._div.style.top = position.y - this._length / 2 + "px";    
+	}
+    var myCompOverlay = new SquareOverlay(point,10,"lime");
+    map.addOverlay(myCompOverlay); 
+    /**
+     * 信息窗口
+     */
+    //创建图标
+    var markerIcon = new BMap.Icon("../img/aa.png",new BMap.Size(33,33));
+    var marker2 = new BMap.Marker(point,{icon:markerIcon});
+    map.addOverlay(marker2);
+    //打开信息窗口
+    var opts = {    
+         width : 250,     // 信息窗口宽度    
+         height: 100,     // 信息窗口高度    
+         title : "This is Tile"  // 信息窗口标题 
+        } ;   
+    var infoWindow = new BMap.InfoWindow("Content:this is main msg content", opts);  // 创建信息窗口对象    
+    map.openInfoWindow(infoWindow, map.getCenter()); //打开信息窗口
+	/**
+	 * 清除标记
+	 */
+	$(".btn0").click(function(){
+		//map.clearOverlays();//清除所有标记
+		map.removeOverlay(myCompOverlay);//清除指定标记
+	})
+	/**
+	 * 地图添加点击事件
+	 */
+    map.addEventListener("click",function(e){
+        //alert("当前位置："+e.point.lng+","+e.point.lat);
+        map.centerAndZoom(e.point,15);  //将点击地方居中并放大显示
+    });
+</script>
+	</body>
+</html>
