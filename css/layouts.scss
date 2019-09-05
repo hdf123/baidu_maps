@@ -1,9 +1,78 @@
 @charset "UTF-8";
-//基础布局
-
 html,body{
     margin:0 auto;
 }
 body{
     max-width:10rem;
+}
+.headers,.footers{
+    width:10rem;
+    position:fixed;
+    left:auto;
+}
+.headers{
+    width:10rem;
+    position:fixed;
+    top:0;
+    left:auto;
+    .lefts{
+        position:absolute;
+        top:0;
+        left:0;
+    }
+    .centers{}
+    .rights{
+        position:absolute;
+        top:0;
+        right:0;
+    }
+}
+.contents{
+    width:10rem;
+    position: absolute;
+    left:auto;
+}
+.footers{
+    width:10rem;
+    position:fixed;
+    left:auto;
+    bottom:0;
+    >a{
+        width:100%;
+        height:100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color:#8D8D8D;
+        font-size: 0.267rem;
+        >img{
+            width: 0.533rem;
+            height: 0.533rem;
+            background-color:rgba(0,0,0,0);
+            margin-bottom:0.1rem;
+        }
+    }
+}
+/**
+     * 加载动画
+ */
+.loading_box{
+    background-color: rgba(0,0,0,0.1);
+    position:fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index:999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .loadings{
+        width:1.1rem;
+        height:1.1rem;
+        >div>div{
+            background-color:rgba(255,255,255,1)!important;
+        }
+    }
 }

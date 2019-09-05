@@ -1,28 +1,30 @@
 @charset "UTF-8";
-header{
-    width:10rem;
-    height:1rem;
+.headers{
+    height: 1.173rem;
     background: #FDD16F;
-    position: fixed;
-    top:0;
-    left:auto;
     display: flex;
     align-items: center;
     justify-content: center;
     color:white;
     font-size:0.5rem;
 }
-.sec{
-    padding-top:1.1rem;
-}
-#l-map{
-    width:100%;
-    height:80vh;
+.contents{
+    top:1.173rem;
+    bottom:1.173rem;
+    overflow: auto;
+    background: aquamarine;
 }
 #container{
     width:100%;
-    height:80vh;
+    height:100%;
 }
 .anchorBL{/*去除百度地图的logo*/
     display: none;
+}
+.footers{
+    height: 1.173rem;
+    >input{
+        width:100%;
+        height:100%;
+    }
 }

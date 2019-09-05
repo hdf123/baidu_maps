@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>test013</title>
+		<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+		<script src="../js/js.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+<style>
+	.headers{
+		height: 1.173rem;
+		display:flex;
+		align-items: center;
+		justify-content: center;
+		background:red;
+	}
+	.contents{
+		top:1.173rem;
+		bottom:1.173rem;
+		overflow: auto;
+		background: aquamarine;
+	}
+	.contents>div{
+		width:100%;
+		height:50px;
+		line-height:50px;
+		padding-left:20px;
+		border-bottom:1px solid white;
+	}
+	.contents>div:last-child{
+		border:none;
+	}
+	.btn0{
+		width:100px;
+		height:100px;
+		border-radius:50%;
+		background: red;
+		position:fixed;
+		top:60%;
+		right:0;
+	}
+	.footers{
+		height: 1.173rem;
+		display:flex;
+		align-items: center;
+		justify-content: center;
+		background:#8BBAD6;
+	}
+</style>
+	<body>
+		<header class="headers">头部</header>
+		<section class='contents'>
+			<p class="btn0"></p>
+		</section>
+		<footer class="footers">尾部</footer>
+		
+		
+<script type="text/javascript">
+	$(function(){
+		for(var i=1;i<21;i++){
+			$(".contents").append('<div>'+i+'</div>');
+		}
+		
+		$("body").append(loading());
+		setTimeout(function(){
+			$("#loading").remove();
+		},1000);
+		
+		
+		var contH = $(".btn0").height();//本身的高度
+		var startY,sY,moveY;
+		var winH = $(".contents").height();//范围区域
+		var headers = $(".headers").height();//距离顶部的距离
+		var footers = $(".footers").height();//距离底部的距离
+		$(".btn0").on({ //绑定事件
+			touchstart: function(e) {
+				
+				startY = e.originalEvent.targetTouches[0].pageY; //获取点击点的Y坐标
+				sY = $(this).offset().top; //相对于当前窗口Y轴的偏移量
+				topY = startY - sY + headers; //鼠标所能移动最上端是当前鼠标距div上边距的位置
+				bottomY = winH - contH + topY; //鼠标所能移动最下端是当前窗口距离减去鼠标距div最下端位置    
+			},
+			touchmove: function(e) {
+				e.preventDefault();
+				moveY = e.originalEvent.targetTouches[0].pageY; //移动过程中Y轴的坐标
+				console.log("5--"+moveY);
+				if(moveY < topY) {
+					moveY = topY;
+				}
+				if(moveY > bottomY) {
+					moveY = bottomY;
+				}
+				$(this).css({
+					"top": moveY + sY - startY,
+				})
+			},
+		})
+	})
+</script>
+	</body>
+</html>

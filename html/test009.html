@@ -9,8 +9,8 @@
 		<script src="../js/js.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
-		<header class="btn0">09百度地图(自定义覆盖物添加点击事件)</header>
-		<section class="sec">
+		<header class="headers">09百度地图(自定义覆盖物添加点击事件)</header>
+		<section class="contents">
 			<div id="container"></div>
 		</section>
 		
@@ -96,7 +96,7 @@
 		});
 	}
 	
-	$(".btn0").click(function(){
+	$(".headers").click(function(){
 		for(var i=0;i<arr1.length;i++){
 			map.removeOverlay(arr1[i]);
 		}

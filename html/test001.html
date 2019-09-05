@@ -9,8 +9,8 @@
 		<script src="../js/js.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
-		<header class="btn0">百度地图(点击清除全部标记)</header>
-		<section class="sec">
+		<header class="headers">百度地图(点击清除全部标记)</header>
+		<section class="contents">
 			<div id="container"></div>
 		</section>
 		
@@ -60,7 +60,7 @@
 	/**
 	 * 
 	 */
-	$(".btn0").click(function(){
+	$(".headers").click(function(){
 		map.clearOverlays();//清除所有标记
 	})
 </script>

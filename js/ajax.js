@@ -33,7 +33,8 @@ function getRequest(){
 
 //loading
 function loading(){
-	return html = '<div id="loading" style="width:100%;height:100%;background:rgba(238,238,238,0.9);z-index:1;text-align:center;position:absolute;left:0px;top:0px;"><div style="width:32px;height:32px;position:fixed;top:45%;left:50%;margin-left:-16px;z-index:1000;"><img src="../../img/loadings.gif" /></div></div>';
+	return html = '<div id="loading"><img src="../img/loadings.gif" /></div>';
+//	return html = '<div id="loading" style="width:100%;height:100%;background:rgba(238,238,238,0.9);z-index:1;text-align:center;position:absolute;left:0px;top:0px;"><div style="width:32px;height:32px;position:fixed;top:45%;left:50%;margin-left:-16px;z-index:1000;"><img src="../img/loadings.gif" /></div></div>';
 }
 
 //图片加载失败时，动态添加也包含在内
@@ -45,41 +46,38 @@ function imgks(){
 	  }
 	}, true);
 }
-
-//基础布局
-function funkr(){
-	var ss=$(document.body).outerHeight(true);
-	var he=$(".heads").outerHeight();
-	var ft=$(".foots").outerHeight();
-	he==undefined?he=0:he=he;
-	ft==undefined?ft=0:ft=ft;
-	var bod=ss-(he+ft);
-	$(".sets").css({"height":bod+"px"});
+/**
+ * 实现将项目的图片转化成base64
+ */
+function convertImgToBase64(url, callback, outputFormat) {
+	var canvas = document.createElement('CANVAS'),
+	ctx = canvas.getContext('2d'),
+	img = new Image;　　
+	img.crossOrigin = 'Anonymous';　　
+	img.onload = function() {
+		canvas.height = img.height;　　
+		canvas.width = img.width;　　
+		ctx.drawImage(img, 0, 0);　　
+		var dataURL = canvas.toDataURL(outputFormat || 'image/png');　　
+		callback.call(this, dataURL);　　
+		canvas = null;
+	};　　
+	img.src = url;
 }
-
-//弹窗(1秒后自动隐藏)，待改善
-function popups(contents,address){//contents：内容；address：地址
-	$("#wdows").remove();
-	$("body").append(`<div id="wdows">
-						<div>${contents}</div>
-					</div>`);
-	$("#wdows").hide();//初始化异常弹窗
-	$("#wdows").fadeIn(500,function(){
-		setTimeout(function(){
-			$("#wdows").fadeOut(1000,function(){
-				console.log(address);
-				address==""||address==undefined||address==null?location.reload():wode(address);//有传地址跳转，没有就刷新当前页面.
-				function wode(address){
-					address!="no"?location.href=address:console.log("什么也不做");
-				}
-			});
-		},1000);
+/**
+ * 输入限制
+ */
+//limitImport('.texts',200);调用实例：类名或ID，限制的字数
+function limitImport(str,num){
+	$(document).on('input propertychange',str,function(){
+ 	var self = $(this);
+ 	var content = self.val();
+ 	if (content.length > num){
+  		self.val(content.substring(0,num));
+ 	} 
+ 	$(".mun").text(self.val().length+'/'+num);
 	});
 }
-//弹窗（需要手动确认或取消），待完善
-
-
-
 //上拉加载
 //_loadIndex 为请求的页数    _loadState为请求状态  0 可以请求  1 正在请求  2 请求结束
 	var _loadIndex =1,
@@ -163,7 +161,35 @@ function popups(contents,address){//contents：内容；address：地址
 	},function () {   
 	});*/
 
-
+/**
+ * 当前时间
+ */
+function getMyDate(str,state){
+    var oDate = new Date(str),
+        oYear = oDate.getFullYear(),//年
+        oMonth = oDate.getMonth()+1,//月
+        oDay = oDate.getDate(),//日
+        oHour = oDate.getHours(),//时
+        oMin = oDate.getMinutes(),//分
+        oSen = oDate.getSeconds(),//秒
+        oFf=oDate.getMilliseconds()//毫秒
+        if(state==1){
+        	oTime = oYear +'.'+ getzf(oMonth) +'.'+ getzf(oDay);//最后拼接时间，年月日
+        }else{
+        	oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay) +' '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//最后拼接时间
+        }
+    return oTime;
+};
+//补0操作
+function getzf(num){
+	return num< 10 ? '0' + num:num;
+}
+/**
+ * 去重
+ */
+function heavy(heavy){
+	return Array.from(new Set(heavy));
+}
 
 
 

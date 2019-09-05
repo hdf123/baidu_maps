@@ -5,31 +5,31 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>test010-搜索附近目标</title>
 		<link rel="stylesheet" type="text/css" href="css/test.css"/>
-		<link rel="stylesheet" type="text/css" href="css/test011.css"/>
+		<link rel="stylesheet" type="text/css" href="css/test010.css"/>
 		<script src="../js/js.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
-		<header class="btn0">10百度地图(附近兴趣点)</header>
-		<section class="sec">
-	        <div>
-		        <label>
-		            <input type="radio" id="one" name="options" value="学校" />学校
-		        </label>
-		        <label>
-		            <input type="radio" id="two" name="options" value="餐饮" />餐饮
-		        </label>
-		        <label>
-		            <input type="radio" id="three" name="options" value="商场" />商场
-		        </label>
-		        <label>
-		            <input type="radio" id="four" name="options" value="医院" />医院
-		        </label>
-		        <label>
-		            <input type="radio" id="five" name="options" value="公交站" />车站
-		        </label>
-	        </div>
+		<header class="headers">10百度地图(附近兴趣点)</header>
+		<section class="contents">
 			<div id="container"></div>
 		</section>
+		<footer class="footers">
+	        <label>
+	            <input type="radio" id="one" name="options" value="学校" />学校
+	        </label>
+	        <label>
+	            <input type="radio" id="two" name="options" value="餐饮" />餐饮
+	        </label>
+	        <label>
+	            <input type="radio" id="three" name="options" value="商场" />商场
+	        </label>
+	        <label>
+	            <input type="radio" id="four" name="options" value="医院" />医院
+	        </label>
+	        <label>
+	            <input type="radio" id="five" name="options" value="公交站" />车站
+	        </label>
+		</footer>
 <script type="text/javascript">
 	// 百度地图API功能
 	var map = new BMap.Map("container");    // 创建Map实例
